@@ -11,7 +11,7 @@
       var canvasElement, irBuf, irGain, irPlayer, sampleRequest, waveformRenderer;
       irBuf = audioCtx.createBuffer(xhr.response, false);
       canvasElement = document.getElementById("waveform");
-      waveformRenderer = new audioOnCanvas.WaveformRenderer({
+      waveformRenderer = new audioOnCanvas.SpectrumRenderer({
         canvasElement: canvasElement,
         buffer: irBuf
       });
@@ -31,8 +31,7 @@
         samplePlayerGain = audioCtx.createGainNode();
         samplePlayerGain.gain.value = 1.0;
         samplePlayerGain.connect(audioCtx.destination);
-        samplePlayer.connect(irPlayer);
-        return samplePlayer.noteOn(0);
+        return samplePlayer.connect(irPlayer);
       };
       return sampleRequest.send();
     };

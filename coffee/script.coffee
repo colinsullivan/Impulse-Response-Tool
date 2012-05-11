@@ -18,7 +18,7 @@ $(document).ready () ->
 
     canvasElement = document.getElementById("waveform")
 
-    waveformRenderer = new audioOnCanvas.WaveformRenderer
+    waveformRenderer = new audioOnCanvas.SpectrumRenderer
       canvasElement: canvasElement
       buffer: irBuf
 
@@ -51,7 +51,7 @@ $(document).ready () ->
       #samplePlayerGain.connect(audioCtx.destination)
       samplePlayer.connect(irPlayer)
 
-      samplePlayer.noteOn(0)
+      #samplePlayer.noteOn(0)
 
     sampleRequest.send()
 

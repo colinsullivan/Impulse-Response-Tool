@@ -8,13 +8,33 @@
     xhr.open("GET", "/audio/41455__sandyrb__3auc-ir-combi-processed-001.wav", true);
     xhr.responseType = "arraybuffer";
     xhr.onload = function(e) {
-      var buf, canvasElement, waveformRenderer;
-      buf = audioCtx.createBuffer(xhr.response, false);
+      var canvasElement, irBuf, irGain, irPlayer, sampleRequest, waveformRenderer;
+      irBuf = audioCtx.createBuffer(xhr.response, false);
       canvasElement = document.getElementById("waveform");
-      return waveformRenderer = new audioOnCanvas.WaveformRenderer({
+      waveformRenderer = new audioOnCanvas.WaveformRenderer({
         canvasElement: canvasElement,
-        buffer: buf
+        buffer: irBuf
       });
+      irPlayer = audioCtx.createConvolver();
+      irGain = audioCtx.createGainNode();
+      irGain.gain.value = 2.0;
+      irPlayer.connect(audioCtx.destination);
+      irPlayer.buffer = irBuf;
+      sampleRequest = new XMLHttpRequest();
+      sampleRequest.open("GET", "/audio/Air_EndingKeys.wav", true);
+      sampleRequest.responseType = "arraybuffer";
+      sampleRequest.onload = function(e) {
+        var sampleBuf, samplePlayer, samplePlayerGain;
+        sampleBuf = audioCtx.createBuffer(sampleRequest.response, false);
+        samplePlayer = audioCtx.createBufferSource();
+        samplePlayer.buffer = sampleBuf;
+        samplePlayerGain = audioCtx.createGainNode();
+        samplePlayerGain.gain.value = 1.0;
+        samplePlayerGain.connect(audioCtx.destination);
+        samplePlayer.connect(irPlayer);
+        return samplePlayer.noteOn(0);
+      };
+      return sampleRequest.send();
     };
     return xhr.send();
   });

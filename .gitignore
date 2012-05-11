@@ -42,3 +42,4 @@ publish
 build/buildinfo.properties
 build/config/buildinfo.properties
 node_modules/*
+coffee/*.js

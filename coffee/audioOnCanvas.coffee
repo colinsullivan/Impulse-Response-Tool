@@ -100,57 +100,49 @@ class audioOnCanvas.WaveformRenderer extends audioOnCanvas.Renderer
 class audioOnCanvas.SpectrumRenderer extends audioOnCanvas.Renderer
   render: () ->
     super()
+
+    canvasHeight = @canvasCtx.canvas.clientHeight
+    canvasWidth = @canvasCtx.canvas.clientWidth
     
-    # Here we'll create a temporary audio context just to render out
-    # the spectrum.
-    # TODO: Do this in non-realtime when available.
-    temporaryAudioCtx = new webkitAudioContext()
-    
-    # to play our source that we're analyzing
-    source = temporaryAudioCtx.createBufferSource()
-    source.buffer = @buffer
+    fft = audioLib.FFT(@buffer.sampleRate, 512)
 
-    # spectrum analyzer
-    spectrumNode = temporaryAudioCtx.createAnalyser()
-    spectrumNode.fftSize = 512
-    spectrumNode.smoothingTimeConstant = 0
-    source.connect(spectrumNode)
+    samples = @buffer.getChannelData 0
 
-    # Dummy process node so we can get grab frequency information at audio
-    # rates.
-    processNode = temporaryAudioCtx.createJavaScriptNode(
-      2048,
-      @buffer.numberOfChannels,
-      1
-    )
-    
-    frequencyDatum = []
+    for i in [0..samples.length]
+      fft.pushSample(samples[i])
 
-    playTime = null
 
-    finishRendering = () =>
-      log frequencyDatum
-      processNode.disconnect(temporaryAudioCtx.destination)
+    prevSamplePosition =
+      x:0
+      y:canvasHeight
 
-    processSpectrumData = (e) =>
-      frequencyData = new Float32Array(512)
-      spectrumNode.getFloatFrequencyData(frequencyData)
 
-      frequencyDatum.push
-        time: temporaryAudioCtx.currentTime
-        frequencyData: frequencyData
+    maxSpectrum = 0.0
+    for i in [0..fft.spectrum.length]
+      if fft.spectrum[i] > maxSpectrum
+        maxSpectrum = fft.spectrum[i]
 
-      log "processing"
-      if temporaryAudioCtx.currentTime+playTime > @buffer.length/@buffer.sampleRate
-        log "finish"
-        finishRendering()
 
-    processNode.onaudioprocess = processSpectrumData
-    spectrumNode.connect(processNode)
+    blockWidth = canvasWidth / fft.spectrum.length
 
-    processNode.connect(temporaryAudioCtx.destination)
 
-    playTime = temporaryAudioCtx.currentTime
-    source.noteOn(0)
+    for i in [0..fft.spectrum.length]
 
+      log fft.spectrum[i]
+
+      newSamplePosition =
+        x:(i/fft.spectrum.length)*canvasWidth
+        y:canvasHeight - (fft.spectrum[i]/maxSpectrum)*canvasHeight
+      
+      @canvasCtx.beginPath()
+      @canvasCtx.moveTo(prevSamplePosition.x, prevSamplePosition.y)
+      @canvasCtx.lineTo(newSamplePosition.x, newSamplePosition.y)
+      @canvasCtx.stroke()
+      
+      prevSamplePosition.x = newSamplePosition.x
+      prevSamplePosition.y = newSamplePosition.y
+
+    #fft.process()
+
+    log fft
      

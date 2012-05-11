@@ -133,42 +133,40 @@
     }
 
     SpectrumRenderer.prototype.render = function() {
-      var finishRendering, frequencyDatum, playTime, processNode, processSpectrumData, source, spectrumNode, temporaryAudioCtx,
-        _this = this;
+      var blockWidth, canvasHeight, canvasWidth, fft, i, maxSpectrum, newSamplePosition, prevSamplePosition, samples, _i, _j, _k, _ref, _ref1, _ref2;
       SpectrumRenderer.__super__.render.call(this);
-      temporaryAudioCtx = new webkitAudioContext();
-      source = temporaryAudioCtx.createBufferSource();
-      source.buffer = this.buffer;
-      spectrumNode = temporaryAudioCtx.createAnalyser();
-      spectrumNode.fftSize = 512;
-      spectrumNode.smoothingTimeConstant = 0;
-      source.connect(spectrumNode);
-      processNode = temporaryAudioCtx.createJavaScriptNode(2048, this.buffer.numberOfChannels, 1);
-      frequencyDatum = [];
-      playTime = null;
-      finishRendering = function() {
-        log(frequencyDatum);
-        return processNode.disconnect(temporaryAudioCtx.destination);
+      canvasHeight = this.canvasCtx.canvas.clientHeight;
+      canvasWidth = this.canvasCtx.canvas.clientWidth;
+      fft = audioLib.FFT(this.buffer.sampleRate, 512);
+      samples = this.buffer.getChannelData(0);
+      for (i = _i = 0, _ref = samples.length; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        fft.pushSample(samples[i]);
+      }
+      prevSamplePosition = {
+        x: 0,
+        y: canvasHeight
       };
-      processSpectrumData = function(e) {
-        var frequencyData;
-        frequencyData = new Float32Array(512);
-        spectrumNode.getFloatFrequencyData(frequencyData);
-        frequencyDatum.push({
-          time: temporaryAudioCtx.currentTime,
-          frequencyData: frequencyData
-        });
-        log("processing");
-        if (temporaryAudioCtx.currentTime + playTime > _this.buffer.length / _this.buffer.sampleRate) {
-          log("finish");
-          return finishRendering();
+      maxSpectrum = 0.0;
+      for (i = _j = 0, _ref1 = fft.spectrum.length; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
+        if (fft.spectrum[i] > maxSpectrum) {
+          maxSpectrum = fft.spectrum[i];
         }
-      };
-      processNode.onaudioprocess = processSpectrumData;
-      spectrumNode.connect(processNode);
-      processNode.connect(temporaryAudioCtx.destination);
-      playTime = temporaryAudioCtx.currentTime;
-      return source.noteOn(0);
+      }
+      blockWidth = canvasWidth / fft.spectrum.length;
+      for (i = _k = 0, _ref2 = fft.spectrum.length; 0 <= _ref2 ? _k <= _ref2 : _k >= _ref2; i = 0 <= _ref2 ? ++_k : --_k) {
+        log(fft.spectrum[i]);
+        newSamplePosition = {
+          x: (i / fft.spectrum.length) * canvasWidth,
+          y: canvasHeight - (fft.spectrum[i] / maxSpectrum) * canvasHeight
+        };
+        this.canvasCtx.beginPath();
+        this.canvasCtx.moveTo(prevSamplePosition.x, prevSamplePosition.y);
+        this.canvasCtx.lineTo(newSamplePosition.x, newSamplePosition.y);
+        this.canvasCtx.stroke();
+        prevSamplePosition.x = newSamplePosition.x;
+        prevSamplePosition.y = newSamplePosition.y;
+      }
+      return log(fft);
     };
 
     return SpectrumRenderer;

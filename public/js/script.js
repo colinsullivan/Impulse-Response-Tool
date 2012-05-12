@@ -5,7 +5,7 @@
     var audioCtx, xhr;
     audioCtx = new webkitAudioContext();
     xhr = new XMLHttpRequest();
-    xhr.open("GET", "/audio/Air_EndingKeys.wav", true);
+    xhr.open("GET", "/audio/480-sine.wav", true);
     xhr.responseType = "arraybuffer";
     xhr.onload = function(e) {
       var canvasElement, irBuf, waveformRenderer;

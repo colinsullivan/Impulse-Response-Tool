@@ -7,9 +7,9 @@ $(document).ready () ->
   xhr.open(
     "GET",
     #"/audio/41455__sandyrb__3auc-ir-combi-processed-001.wav",
-    "/audio/Air_EndingKeys.wav",
+    #"/audio/Air_EndingKeys.wav",
     #"/audio/sine.wav",
-    #"/audio/480-sine.wav",
+    "/audio/480-sine.wav",
     true
   )
   xhr.responseType = "arraybuffer"

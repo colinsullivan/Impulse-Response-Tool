@@ -38,9 +38,9 @@
   </header>
   <div role="main">
 
-    <canvas id="waveform" width="720" height="480">
-      
-    </canvas>
+    <p id="info"></p>
+
+    <canvas id="waveform" width="720" height="480"></canvas>
 
   </div>
   <footer>
@@ -55,12 +55,13 @@
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 
   <!-- scripts concatenated and minified via build script -->
-  <script src="/js/libs/audiolib.js"></script>
   <script src="/js/plugins.js"></script>
 
   <script src="/js/libs/audioOnCanvas/lib/audioOnCanvas.js"></script>
+  <script src="/js/libs/microphone.js/microphone.js"></script>
 
-  <script src="/js/script.js"></script>
+  <script src="/js/init.js"></script>
+  <!--<script src="/js/script.js"></script>-->
   <!-- end scripts -->
 
   <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.

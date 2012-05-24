@@ -1,3 +1,6 @@
 [submodule "public/js/libs/audioOnCanvas"]
 	path = public/js/libs/audioOnCanvas
 	url = git://github.com/colinsullivan/audioOnCanvas.git
+[submodule "public/js/libs/microphone.js"]
+	path = public/js/libs/microphone.js
+	url = git://github.com/milani/microphone.js.git

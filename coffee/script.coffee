@@ -6,10 +6,10 @@ $(document).ready () ->
 
   xhr.open(
     "GET",
-    #"/audio/41455__sandyrb__3auc-ir-combi-processed-001.wav",
+    "/audio/41455__sandyrb__3auc-ir-combi-processed-001.wav",
     #"/audio/Air_EndingKeys.wav",
     #"/audio/sine.wav",
-    "/audio/480-sine.wav",
+    #"/audio/480-sine.wav",
     true
   )
   xhr.responseType = "arraybuffer"
@@ -20,42 +20,32 @@ $(document).ready () ->
 
     canvasElement = document.getElementById("waveform")
 
-    waveformRenderer = new audioOnCanvas.SpectrumRenderer
-      canvasElement: canvasElement
-      buffer: irBuf
+    #waveformRenderer = new audioOnCanvas.SpectrumRenderer
+    #  canvasElement: canvasElement
+    #  buffer: irBuf
 
-      #    irPlayer = audioCtx.createConvolver()
-      #    irGain = audioCtx.createGainNode()
-      #    irGain.gain.value = 2.0
-      #    #irPlayer.connect(irGain)
-      #    irPlayer.connect(audioCtx.destination)
-      #
-      #    irPlayer.buffer = irBuf
+    irPlayer = audioCtx.createConvolver()
+    irPlayer.connect(audioCtx.destination)
+    irPlayer.buffer = irBuf
     
     
-    #    sampleRequest = new XMLHttpRequest()
-    #    sampleRequest.open(
-    #      "GET",
-    #      "/audio/Air_EndingKeys.wav",
-    #      true
-    #    )
-    #    sampleRequest.responseType = "arraybuffer"
-    #    sampleRequest.onload = (e) ->
-    #      sampleBuf = audioCtx.createBuffer sampleRequest.response, false
-    #
-    #      samplePlayer = audioCtx.createBufferSource()
-    #      samplePlayer.buffer = sampleBuf
-    #      samplePlayerGain = audioCtx.createGainNode()
-    #      samplePlayerGain.gain.value = 1.0
-    #      samplePlayerGain.connect(audioCtx.destination)
-    #
-    #      #samplePlayer.connect(samplePlayerGain)
-    #      #samplePlayerGain.connect(audioCtx.destination)
-    #      samplePlayer.connect(irPlayer)
+    sampleRequest = new XMLHttpRequest()
+    sampleRequest.open(
+      "GET",
+      "/audio/Air_EndingKeys.wav",
+      true
+    )
+    sampleRequest.responseType = "arraybuffer"
+    sampleRequest.onload = (e) ->
+      sampleBuf = audioCtx.createBuffer sampleRequest.response, false
+    
+      samplePlayer = audioCtx.createBufferSource()
+      samplePlayer.buffer = sampleBuf
+      samplePlayer.connect(irPlayer)
 
-      #samplePlayer.noteOn(0)
+      samplePlayer.noteOn(0)
 
-      #sampleRequest.send()
+    sampleRequest.send()
 
 
 

@@ -5,16 +5,27 @@
     var audioCtx, xhr;
     audioCtx = new webkitAudioContext();
     xhr = new XMLHttpRequest();
-    xhr.open("GET", "/audio/480-sine.wav", true);
+    xhr.open("GET", "/audio/41455__sandyrb__3auc-ir-combi-processed-001.wav", true);
     xhr.responseType = "arraybuffer";
     xhr.onload = function(e) {
-      var canvasElement, irBuf, waveformRenderer;
+      var canvasElement, irBuf, irPlayer, sampleRequest;
       irBuf = audioCtx.createBuffer(xhr.response, false);
       canvasElement = document.getElementById("waveform");
-      return waveformRenderer = new audioOnCanvas.SpectrumRenderer({
-        canvasElement: canvasElement,
-        buffer: irBuf
-      });
+      irPlayer = audioCtx.createConvolver();
+      irPlayer.connect(audioCtx.destination);
+      irPlayer.buffer = irBuf;
+      sampleRequest = new XMLHttpRequest();
+      sampleRequest.open("GET", "/audio/Air_EndingKeys.wav", true);
+      sampleRequest.responseType = "arraybuffer";
+      sampleRequest.onload = function(e) {
+        var sampleBuf, samplePlayer;
+        sampleBuf = audioCtx.createBuffer(sampleRequest.response, false);
+        samplePlayer = audioCtx.createBufferSource();
+        samplePlayer.buffer = sampleBuf;
+        samplePlayer.connect(irPlayer);
+        return samplePlayer.noteOn(0);
+      };
+      return sampleRequest.send();
     };
     return xhr.send();
   });

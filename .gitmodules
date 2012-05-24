@@ -1,0 +1,3 @@
+[submodule "public/js/libs/audioOnCanvas"]
+	path = public/js/libs/audioOnCanvas
+	url = git://github.com/colinsullivan/audioOnCanvas.git

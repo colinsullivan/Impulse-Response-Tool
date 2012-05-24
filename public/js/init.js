@@ -34,12 +34,23 @@
 
         //var mic = new Microphone({
           //mode: 2,
-          //swfPath: "/js/libs/microphone.js/microphone.swf", 
-          //debugging: false
+          //swfPath: "/js/libs/microphone.js/src/microphone.swf", 
+          //debugging: true
         //}, function () {
          
           //// bug in microphone.js...setup doesn't get fired
+          //console.log("microphone callback");
 
+
+
+          //infoElement.html("Starting mic...");
+          //mic.start();
+
+          //mic.setLoopBack(false);
+          //setTimeout(function() {
+            //infoElement.html("Stopping mic...");
+            //mic.stop();
+          //}, 5000);
         //});
 
         //setTimeout( function () {
@@ -50,12 +61,7 @@
             //bufs.push(data);
           //};
 
-          //infoElement.html("Starting mic...");
-          //mic.start();
 
-          //setTimeout(function() {
-            //mic.stop();
-          //}, 5000);
         //}, 1000);
 
       }

@@ -1,3 +1,6 @@
 [submodule "public/js/libs/audioOnCanvas"]
 	path = public/js/libs/audioOnCanvas
 	url = git://github.com/colinsullivan/audioOnCanvas.git
+[submodule "public/css/bootstrap"]
+	path = public/css/bootstrap
+	url = git://github.com/twitter/bootstrap.git

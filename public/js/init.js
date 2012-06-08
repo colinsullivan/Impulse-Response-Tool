@@ -1,4 +1,26 @@
-(
+/*global require,document*/
+
+require.config({
+  paths: {
+    jquery: "/js/libs/jquery-1.7.1"
+  }
+});
+
+require(["jquery"], function ($) {
+
+  "use strict";
+
+    $(document).ready(
+      function  () {
+        var infoElement;
+
+        infoElement = $("p#info");
+        infoElement.html("loading...");
+      }
+    );
+});
+
+/*(
   function () {
     
     //function hasGetUserMedia() {
@@ -7,12 +29,6 @@
                 //navigator.mozGetUserMedia || navigator.msGetUserMedia);
     //}
   
-    $(document).ready(
-      function  () {
-        var infoElement;
-
-        infoElement = $("p#info");
-        infoElement.html("loading...");
 
 
         //if (!hasGetUserMedia()) {
@@ -69,4 +85,4 @@
 
 
   }
-).call(this);
+).call(this);*/

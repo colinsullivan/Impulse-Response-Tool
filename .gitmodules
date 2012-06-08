@@ -4,3 +4,6 @@
 [submodule "public/css/bootstrap"]
 	path = public/css/bootstrap
 	url = git://github.com/twitter/bootstrap.git
+[submodule "public/js/libs/requirejs"]
+	path = public/js/libs/requirejs
+	url = git://github.com/jrburke/requirejs.git

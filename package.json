@@ -2,6 +2,7 @@
     "name": "impulse-response",
     "version": "0.0.1",
     "dependencies": {
-        "audiolib": "0.6.x"
+        "audiolib": "0.6.x",
+        "requirejs": "2.0.x"
     }
 }

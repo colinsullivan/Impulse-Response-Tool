@@ -26,10 +26,11 @@ define(["jquery", "irtool/Controller", "irtool/irtool"], function ($, Controller
       
     },
     generate_golay: function (golayLength) {
-      var bufa, bufb,
+      var bufa, bufb, data,
         ctx = irtool.audioCtx,
         golay_code,
-        golayResult;
+        golayResult,
+        zpf;
 
       /**
        *  Generates a golay code of length 2^n.
@@ -77,6 +78,32 @@ define(["jquery", "irtool/Controller", "irtool/irtool"], function ($, Controller
       };
 
       golayResult = golay_code(golayLength);
+      zpf = 1024;
+
+      // zero pad golay a
+      bufa = ctx.createBuffer(1, golayResult[0].length + zpf, irtool.sampleRate);
+      data = golayResult[0].getChannelData(0);
+      for (i = 0; i < bufa.length; i++) {
+        if (i < golayResult[0].length) {
+          bufa[i] = data[i];
+        }
+        else {
+          bufa[i] = 0.0;
+        }
+      }
+
+      //zero pad golay b
+      bufb = ctx.createBuffer(1, golayResult[1].length + zpf, irtool.sampleRate);
+      data = golayResult[1].getChannelData(0);
+      for (i = 0; i < bufb.length; i++) {
+        if (i < golayResult[1].length) {
+          bufb[i] = data[i];
+        }
+        else {
+          bufb[i] = 0.0;
+        }
+      }
+
     }
   });
 });

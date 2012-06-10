@@ -7,3 +7,6 @@
 [submodule "public/js/libs/requirejs"]
 	path = public/js/libs/requirejs
 	url = git://github.com/jrburke/requirejs.git
+[submodule "public/js/libs/backbone"]
+	path = public/js/libs/backbone
+	url = git://github.com/documentcloud/backbone.git

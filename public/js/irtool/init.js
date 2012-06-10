@@ -1,8 +1,17 @@
-/*global require,document*/
+/**
+ *  @file       init.js
+ *              Entrypoint for impulse response tool app.
+ *
+ *  @author     Colin Sullivan <colinsul [at] gmail.com>
+ *
+ *              Copyright (c) 2012 Colin Sullivan
+ *              Licensed under the MIT license.
+ **/
 
 require.config({
   paths: {
-    jquery: "/js/libs/jquery-1.7.1"
+    jquery: "/js/libs/jquery-1.7.1",
+    Backbone: "/js/libs/backbone/backbone"
   }
 });
 
@@ -10,14 +19,12 @@ require(["jquery"], function ($) {
 
   "use strict";
 
-    $(document).ready(
-      function  () {
-        var infoElement;
+  $(document).ready(function () {
+    var infoElement;
 
-        infoElement = $("p#info");
-        infoElement.html("loading...");
-      }
-    );
+    infoElement = $("p#info");
+    infoElement.html("loading...");
+  });
 });
 
 /*(

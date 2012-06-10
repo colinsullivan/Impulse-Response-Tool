@@ -1,12 +1,5 @@
 @import "bootstrap/less/mixins";
 
-// Border Radius
-/*.border-radius(@radius) {*/
-  /*-webkit-border-radius: @radius;*/
-     /*-moz-border-radius: @radius;*/
-          /*border-radius: @radius;*/
-/*}*/
-
 header.navbar {
   margin-bottom: 0;
 
@@ -17,4 +10,10 @@ header.navbar {
 
 ul#navigation {
   .border-radius(0px 0px 3px 3px);
+
+  li.disabled > * {
+    text-decoration: none;
+    color: rgba(25,25,25,0.25);
+    cursor: default;
+  }
 }

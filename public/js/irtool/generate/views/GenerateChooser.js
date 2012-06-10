@@ -36,23 +36,6 @@ define([
       this.$golayInfoElement = $("div#golay_info");
 
       this.setElement($("div#generate_chooser"));
-
-      this.controller.appstate.on("change:generate_choice", function (appstate) {
-        var currentChoice = appstate.get("generate_choice");
-
-        //$("div.generate_chooser_info.active").removeClass("active");
-        //$("li.generate_chooser_choice.active").removeClass("active");
-
-        //if (currentChoice === appstate.GENERATE_CHOICES.IMPULSE) {
-          //me.$impulseChoiceElement.addClass("active");
-          //me.$impulseInfoElement.addClass("active");
-        //}
-        //else if (currentChoice === appstate.GENERATE_CHOICES.GOLAY) {
-          //me.$golayInfoElement.addClass("active");
-          //me.$golayChoiceElement.addClass("active");
-        //}
-        
-      });
     },
     disabled_choice_clicked: function (e) {
       // prevent href="#"
@@ -60,13 +43,9 @@ define([
     },
     impulse_choice_clicked: function (e) {
       this.controller.appstate.set("generate_choice", this.controller.appstate.GENERATE_CHOICES.IMPULSE);
-      // prevent href="#"
-      e.preventDefault();
     },
     golay_choice_clicked: function (e) {
       this.controller.appstate.set("generate_choice", this.controller.appstate.GENERATE_CHOICES.GOLAY);
-      // prevent href="#"
-      e.preventDefault();
     },
     golay_length_chosen: function (e) {
       var $lengthChoice = $(e.currentTarget), chosenPower;
@@ -75,6 +54,8 @@ define([
       this.controller.appstate.set("golay_power", chosenPower);
 
 
+      $("span#golay_length_chooser_info").text(Math.pow(2, chosenPower) + " samples.  Cool.");
+
 
       // prevent href="#"
       e.preventDefault();
@@ -82,9 +63,9 @@ define([
     events: {
 
       // when generation choice is selected
-      //"click li.generate_chooser_choice.disabled": "disabled_choice_clicked",
-      //"click li.generate_chooser_choice#impulse_choice": "impulse_choice_clicked",
-      //"click li.generate_chooser_choice#golay_choice": "golay_choice_clicked",
+      "click li.generate_chooser_choice.disabled": "disabled_choice_clicked",
+      "click li.generate_chooser_choice#impulse_choice": "impulse_choice_clicked",
+      "click li.generate_chooser_choice#golay_choice": "golay_choice_clicked",
 
       // when golay length is selected
       "click li.golay_length_choice": "golay_length_chosen",

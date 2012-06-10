@@ -32,7 +32,6 @@ define([
       this.chooser = new GenerateChooser({
         controller: this
       });
-      this.appstate.set("generate_choice", this.appstate.GENERATE_CHOICES.IMPULSE);
     },
 
     generate_impulse: function () {

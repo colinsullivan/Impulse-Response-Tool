@@ -19,6 +19,11 @@ define([
     initialize: function (params) {
       Controller.prototype.initialize.call(this, params);
 
+      if (typeof params.appstate === "undefined" || params.appstate === null) {
+        throw new Error("params.appstate is undefined");
+      }
+      this.appstate = params.appstate;
+
       $("ul#navigation").children("li.active").removeClass("active");
       $("li#generate_link").addClass("active");
 
@@ -27,6 +32,7 @@ define([
       this.chooser = new GenerateChooser({
         controller: this
       });
+      this.appstate.set("generate_choice", this.appstate.GENERATE_CHOICES.IMPULSE);
     },
 
     generate_impulse: function () {

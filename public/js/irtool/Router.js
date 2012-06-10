@@ -49,7 +49,9 @@ define([
         console.log("todo");
       }
 
-      irtool.currentController = new GenerateController();
+      irtool.currentController = new GenerateController({
+        appstate: this.appstate
+      });
       this.appstate.set("state", this.appstate.STATES.GENERATE);
     },
 

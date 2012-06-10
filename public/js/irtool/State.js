@@ -22,10 +22,23 @@ define(["underscore", "Backbone"], function (_, Backbone) {
       HOME: 1,
       GENERATE: 2
     },
+
+    /**
+     *  Potential generate choices
+     **/
+    GENERATE_CHOICES: {
+      IMPULSE: 1,
+      GOLAY: 2
+    },
     initialize: function (params) {
       Backbone.Model.prototype.initialize.call(this, params);
 
       this.set("state", this.STATES.UNKNOWN);
+
+      this.set("generate_choice", this.STATES.UNKNOWN);
+
+      // power of two chosen for golay code generation
+      this.set("golay_power", null);
     }
   });
 });

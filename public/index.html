@@ -92,18 +92,39 @@
 
         <div class="info_block row-fluid" id="generate_chooser">
           <ul class="nav nav-pills nav-stacked span4">
-            <li class="generate_chooser_choice active" id="impulse_choice"><a href="#">Impulse (Balloon Pop)</a></li>
+            <li class="generate_chooser_choice" id="impulse_choice"><a href="#">Impulse (Balloon Pop)</a></li>
             <li class="generate_chooser_choice" id="golay_choice"><a href="#">Golay Codes</a></li>
             <li class="generate_chooser_choice disabled"><a href="#">Allpass Chirps</a></li>
             <li class="generate_chooser_choice disabled"><a href="#">Sine Sweeps</a></li>
           </ul>
           <div class="span8">
-            <div class="generate_chooser_info active" id="impulse_info">
+            <div class="generate_chooser_info" id="impulse_info">
               <p>This is the simplest of the methods, you will record the response of the room to a loud sound of a balloon being popped, which is virtually an impulse.</p>
             </div>
             <div class="generate_chooser_info" id="golay_info">
-              <p>_Golay codes_ are a set of signals that relate to the impulse signal in a special way.  The room will need to be measured against each Golay code component, which are then summed together to estimate the impulse response of the room.  This is an extra step, but ultimately yields a higher _signal to noise_ ratio in the impulse response which is good.</p>
-              dropdownhere
+              <p><a href="http://en.wikipedia.org/wiki/Complementary_sequences" class="reference">Golay codes</a> are a set of signals that relate to the impulse signal in a special way.  The room will need to be measured against both Golay code components, which are then cross-correlated and summed together to estimate the impulse response of the room.  This is an extra step, but ultimately yields a higher <a href="http://en.wikipedia.org/wiki/Signal-to-noise_ratio" class="reference">signal to noise ratio</a> in the impulse response which is good.</p>
+              <div id="golay_length_chooser" class="btn-group">
+                <button class="btn dropdown-toggle" data-toggle="dropdown">Golay Length <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li class="golay_length_choice" data-power="9">
+                    <a href="#">512</a>
+                  </li>
+                  <li class="golay_length_choice" data-power="10">
+                    <a href="#">1024</a>
+                  </li>
+                  <li class="golay_length_choice" data-power="11">
+                    <a href="#">2048</a>
+                  </li>
+                  <li class="golay_length_choice" data-power="12">
+                    <a href="#">4096</a>
+                  </li>
+                  <li class="golay_length_choice" data-power="13">
+                    <a href="#">8192</a>
+                  </li>
+                </ul>
+                <span id="golay_length_chooser_info">Please select a length for the Golay code.</span>
+              </div>
+
             </div>
           </div>
         </div>

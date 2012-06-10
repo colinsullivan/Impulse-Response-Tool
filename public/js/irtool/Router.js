@@ -13,8 +13,9 @@ define([
   "irtool/irtool",
   "irtool/home/HomeController",
   "irtool/generate/GenerateController",
-  "irtool/views/Navigation"
-], function (_, Backbone, irtool, HomeController, GenerateController, Navigation) {
+  "irtool/views/Navigation",
+  "irtool/State"
+], function (_, Backbone, irtool, HomeController, GenerateController, Navigation, State) {
   "use strict";
   Backbone = window.Backbone;
   _ = window._;
@@ -24,10 +25,14 @@ define([
       params = params || {};
       Backbone.Router.prototype.initialize.call(this, params);
 
-      var navigationView;
+      var navigationView, appstate;
 
-      navigationView = new Navigation();
-
+      appstate = new State();
+      this.appstate = appstate;
+      
+      navigationView = new Navigation({
+        appstate: appstate
+      });
       this.navigationView = navigationView;
     },
     routes: {
@@ -45,7 +50,7 @@ define([
       }
 
       irtool.currentController = new GenerateController();
-      irtool.state.set(irtool.state.STATES.GENERATE);
+      this.appstate.set("state", this.appstate.STATES.GENERATE);
     },
 
     go_home: function () {
@@ -54,7 +59,7 @@ define([
       }
 
       irtool.currentController = new HomeController();
-      irtool.state.set(irtool.state.STATES.HOME);
+      this.appstate.set("state", this.appstate.STATES.HOME);
     }
   });
 });

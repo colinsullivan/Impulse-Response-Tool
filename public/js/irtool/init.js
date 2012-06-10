@@ -22,9 +22,8 @@ require([
   "underscore",
   "Backbone",
   "irtool/irtool",
-  "irtool/Router",
-  "irtool/State"
-], function ($, _, Backbone, irtool, Router, State) {
+  "irtool/Router"
+], function ($, _, Backbone, irtool, Router) {
 
   _ = window._;
   Backbone = window.Backbone;
@@ -32,7 +31,11 @@ require([
   "use strict";
 
   $(document).ready(function () {
-    irtool.state = new State();
+    // TODO: only for debugging
+    window.irtool = irtool;
+
+    // TODO: Handle warning for no support
+    irtool.audioCtx = new webkitAudioContext();
     irtool.router = new Router();
     Backbone.history.start();
   });

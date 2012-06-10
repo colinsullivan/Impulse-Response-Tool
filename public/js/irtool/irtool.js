@@ -24,7 +24,15 @@ define(["./Base"], function (Base) {
     /**
      *  State model instance
      **/
-    state: null
+    state: null,
+    /**
+     *  Global reference to audio context
+     **/
+    audioCtx: null,
+    /**
+     *  Sample rate of generated sounds.
+     **/
+    sampleRate: 48000
   };
 
   return irtool;

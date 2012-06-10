@@ -20,19 +20,42 @@ define([
 
   return Backbone.View.extend({
     initialize: function (params) {
+      params = params || {};
       Backbone.View.prototype.initialize.call(this, params);
 
+      var APPSTATES, $el, me = this;
+
+      if (typeof params.appstate === "undefined" || params.appstate === null) {
+        throw new Error("params.appstate is undefined");
+      }
+
+
       this.setElement($("ul#navigation"));
+      $el = this.$el;
 
-      var appstate = irtool.state;
+      APPSTATES = params.appstate.STATES;
 
-      irtool.state.on("change", function (newState) {
+      // navigation links indexed by state enum
+      this.$navLinksByState = {};
+      this.$navLinksByState[APPSTATES.HOME] = $el.children("#home_link");
+      this.$navLinksByState[APPSTATES.GENERATE] = $el.children("#generate_link");
 
-        var prevState, newState;
+      // when app changes appstate
+      params.appstate.on("change:state", function (appstate) {
+        var prevStateValue = appstate.previous("state"),
+          currentStateValue = appstate.get("state");
 
-
-
+        me.handle_state_change(prevStateValue, currentStateValue);
       });
+    },
+    handle_state_change: function (prevStateValue, currentStateValue) {
+      var $prevNavLink = this.$navLinksByState[prevStateValue],
+        $currentNavLink = this.$navLinksByState[currentStateValue],
+        $currentlyActiveNavLink = this.$el.children(".active");
+
+
+      $currentlyActiveNavLink.removeClass("active");
+      $currentNavLink.removeClass("disabled").addClass("active");
     }
   });
 });

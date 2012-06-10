@@ -9,9 +9,8 @@
 
 define([
   "jquery",
-  "swig",
   "irtool/Controller"
-], function ($, swig, Controller) {
+], function ($, Controller) {
   "use strict";
 
   return Controller.extend({

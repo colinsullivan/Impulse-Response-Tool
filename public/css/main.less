@@ -8,24 +8,31 @@ header.navbar {
   }
 }
 
+
+li.disabled > * {
+  text-decoration: none;
+  color: rgba(25,25,25,0.25);
+  cursor: default;
+}
+li.disabled > a:hover {
+  background-color: transparent;
+}
+
 ul#navigation {
   .border-radius(0px 0px 3px 3px);
 
-  li.disabled > * {
-    text-decoration: none;
-    color: rgba(25,25,25,0.25);
-    cursor: default;
-  }
 }
 
 a.reference {
   font-style: italic;
 }
 
-section {
+section, div.generate_chooser_info {
   display: none;
 }
 
-section.active {
+section.active, div.generate_chooser_info.active {
   display: block;
 }
+
+

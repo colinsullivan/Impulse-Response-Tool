@@ -7,7 +7,12 @@
  *              Licensed under the MIT license.
  **/
 
-define(["jquery", "irtool/Controller", "irtool/irtool"], function ($, Controller, irtool) {
+define([
+  "jquery",
+  "irtool/Controller",
+  "irtool/irtool",
+  "irtool/generate/views/GenerateChooser"
+], function ($, Controller, irtool, GenerateChooser) {
   "use strict";
 
   return Controller.extend({
@@ -19,6 +24,9 @@ define(["jquery", "irtool/Controller", "irtool/irtool"], function ($, Controller
 
       $("section#generate").addClass("active");
 
+      this.chooser = new GenerateChooser({
+        controller: this
+      });
     },
 
     generate_impulse: function () {

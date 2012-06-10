@@ -63,7 +63,46 @@
     </ul>
 
 
-    <p id="info">loading...</p>
+    <div id="main">
+
+      <section id="home">
+        <div class="info_block">
+          <h2>Reverberation Measurement Tool</h2>
+          <p>This tool will help you measure the reverberant characteristics of a room and then apply these characteristics to any audio of your choosing, making it sound like it was recorded in the room.</p>
+        </div>
+        <div class="info_block">
+          <h2>How does it work?</h2>
+          <p>First, we create an <a href="http://en.wikipedia.org/wiki/Impulse_response" class="reference">impulse response</a> of the room using one of a few methods.  The impulse response is an audio signal that will contain the reverberant characteristics of the room, which can then be applied to any arbitrary sound by process of <a href="http://en.wikipedia.org/wiki/Convolution" class="reference">convolution</a>.</p>
+        </div>
+        <div class="info_block">
+          <h2>When can I do it?</h2>
+          <p>Right now.</p>
+        </div>
+
+        <div>
+          <a href="#generate" class="btn btn-primary btn-large">Get Started</a>
+        </div>
+      </section>
+
+      <section id="generate">
+        <div class="info_block">
+          <h2>Capturing Room Characteristics</h2>
+          <p>There are a many different ways to capture the characteristics of the room.  Please choose the method below that you would like to use.</p>
+        </div>
+
+        <div class="info_block">
+          <ul class="nav nav-pills nav-stacked">
+            <li class="active"><a href="#">Impulse (Balloon Pop)</a></li>
+            <li><a href="#">Golay Codes</a></li>
+            <li class="disabled"><a href="#">Allpass Chirps</a></li>
+            <li class="disabled"><a href="#">Sine Sweeps</a></li>
+          </ul>
+        </div>
+
+      </section>
+
+      
+    </div>
 
     <canvas id="waveform" width="720" height="480"></canvas>
 
@@ -71,7 +110,6 @@
   <footer>
 
   </footer>
-
 
   <!-- JavaScript at the bottom for fast page loading -->
 

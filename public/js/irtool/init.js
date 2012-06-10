@@ -12,7 +12,8 @@ require.config({
   paths: {
     jquery: "/js/libs/jquery-1.7.1",
     underscore: "/js/libs/underscore/underscore",
-    Backbone: "/js/libs/backbone/backbone"
+    Backbone: "/js/libs/backbone/backbone",
+    swig: "/js/libs/swig/dist/browser/swig"
   },
   baseUrl: "/js/"
 });

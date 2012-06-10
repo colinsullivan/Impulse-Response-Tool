@@ -7,17 +7,21 @@
  *              Licensed under the MIT license.
  **/
 
-define(["irtool/Controller", "jquery"], function (Controller, $) {
+define([
+  "jquery",
+  "swig",
+  "irtool/Controller"
+], function ($, swig, Controller) {
   "use strict";
 
   return Controller.extend({
     initialize: function (params) {
       Controller.prototype.initialize.call(this, params);
 
-      $("p#info").text("Home");
-
       // activate "generate" link
       $("li#generate_link").removeClass("disabled");
+
+      $("section#home").addClass("active");
     }
   });
 });

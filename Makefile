@@ -11,4 +11,6 @@ styles:
 deps:
 	@echo "Building Twitter Bootstrap framework"
 	@cd ./public/css/bootstrap/ && make
+	@echo "Building swig for browser"
+	@cd ./public/js/libs/swig && make && make browser
 

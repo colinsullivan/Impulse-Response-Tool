@@ -16,7 +16,8 @@ define(["jquery", "irtool/Controller", "irtool/irtool"], function ($, Controller
 
       $("ul#navigation").children("li.active").removeClass("active");
       $("li#generate_link").addClass("active");
-      $("p#info").text("Generate");
+
+      $("section#generate").addClass("active");
 
     },
 

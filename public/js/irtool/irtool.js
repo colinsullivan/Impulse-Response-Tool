@@ -32,7 +32,11 @@ define(["./Base"], function (Base) {
     /**
      *  Sample rate of generated sounds.
      **/
-    sampleRate: 48000
+    sampleRate: 48000,
+    /**
+     *  Base heirarchy templates
+     **/
+    templates: null
   };
 
   return irtool;

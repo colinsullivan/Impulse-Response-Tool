@@ -14,6 +14,11 @@ define(["./Base"], function (Base) {
   return Base.extend({
     initialize: function (params) {
       Base.prototype.initialize.call(this, params);
+
+      var currentlyActiveSection = $("section.active");
+      if (currentlyActiveSection.length) {
+        currentlyActiveSection.removeClass("active");
+      }
     }
   });
 });

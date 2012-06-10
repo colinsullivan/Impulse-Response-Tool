@@ -45,25 +45,25 @@
     </header>
 
     <ul id="navigation" class="breadcrumb">
-      <li class="active">
-        <a href="#">Home</a>
+      <li id="home_link" class="active">
+        <a href="#home">Home</a>
       </li>
 
-      <li class="disabled">
-       <span class="divider">►</span> <a href="#">Generate</a> 
+      <li id="generate_link" class="disabled">
+       <span class="divider">►</span> <a href="#generate">Generate</a> 
       </li> 
 
-      <li class="disabled">
-        <span class="divider">►</span> <a href="#">Capture</a>
+      <li id="capture_link" class="disabled">
+        <span class="divider">►</span> <a href="#capture">Capture</a>
       </li>
 
-      <li class="disabled">
-        <span class="divider">►</span> <a href="#">Reverberize</a>
+      <li id="reverberize_link" class="disabled">
+        <span class="divider">►</span> <a href="#reverberize">Reverberize</a>
       </li>
     </ul>
 
 
-    <p id="info"></p>
+    <p id="info">loading...</p>
 
     <canvas id="waveform" width="720" height="480"></canvas>
 
@@ -92,11 +92,11 @@
 
   <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
        mathiasbynens.be/notes/async-analytics-snippet -->
-  <script>
+  <!--<script>
     var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
     (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
     g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
     s.parentNode.insertBefore(g,s)}(document,'script'));
-  </script>
+  </script>-->
 </body>
 </html>

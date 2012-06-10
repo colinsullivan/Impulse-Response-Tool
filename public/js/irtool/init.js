@@ -11,19 +11,30 @@
 require.config({
   paths: {
     jquery: "/js/libs/jquery-1.7.1",
+    underscore: "/js/libs/underscore/underscore",
     Backbone: "/js/libs/backbone/backbone"
-  }
+  },
+  baseUrl: "/js/"
 });
 
-require(["jquery"], function ($) {
+require([
+  "jquery",
+  "underscore",
+  "Backbone",
+  "irtool/irtool",
+  "irtool/Router",
+  "irtool/State"
+], function ($, _, Backbone, irtool, Router, State) {
+
+  _ = window._;
+  Backbone = window.Backbone;
 
   "use strict";
 
   $(document).ready(function () {
-    var infoElement;
-
-    infoElement = $("p#info");
-    infoElement.html("loading...");
+    irtool.state = new State();
+    irtool.router = new Router();
+    Backbone.history.start();
   });
 });
 

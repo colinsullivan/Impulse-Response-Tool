@@ -10,3 +10,6 @@
 [submodule "public/js/libs/backbone"]
 	path = public/js/libs/backbone
 	url = git://github.com/documentcloud/backbone.git
+[submodule "public/js/libs/underscore"]
+	path = public/js/libs/underscore
+	url = git://github.com/documentcloud/underscore.git

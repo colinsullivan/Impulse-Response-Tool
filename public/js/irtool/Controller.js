@@ -7,11 +7,13 @@
  *              Licensed under the MIT license.
  **/
 
-define(["jquery", "Backbone"], function ($, Backbone) {
+define(["./Base"], function (Base) {
 
   "use strict";
 
-
-
-  
+  return Base.extend({
+    initialize: function (params) {
+      Base.prototype.initialize.call(this, params);
+    }
+  });
 });

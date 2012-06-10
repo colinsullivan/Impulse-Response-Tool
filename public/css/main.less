@@ -16,6 +16,7 @@ li.disabled > * {
 }
 li.disabled > a:hover {
   background-color: transparent;
+  border-color: transparent !important;
 }
 
 ul#navigation {
@@ -27,12 +28,15 @@ a.reference {
   font-style: italic;
 }
 
-section, div.generate_chooser_info {
+section {
   display: none;
 }
 
-section.active, div.generate_chooser_info.active {
+section.active {
   display: block;
 }
 
-
+// hack so golay length dropdown shows up.
+div.tab-pane#golay_info {
+  min-height: 400px;
+}

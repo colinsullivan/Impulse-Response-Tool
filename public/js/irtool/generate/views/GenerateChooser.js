@@ -11,8 +11,9 @@ define([
   "jquery",
   "underscore",
   "Backbone",
-  "bootstrap/bootstrap-dropdown"
-], function ($, _, Backbone, dropdown) {
+  "bootstrap/bootstrap-dropdown",
+  "bootstrap/bootstrap-tab"
+], function ($, _, Backbone, dropdown, tab) {
   "use strict";
 
   _ = window._;
@@ -39,17 +40,17 @@ define([
       this.controller.appstate.on("change:generate_choice", function (appstate) {
         var currentChoice = appstate.get("generate_choice");
 
-        $("div.generate_chooser_info.active").removeClass("active");
-        $("li.generate_chooser_choice.active").removeClass("active");
+        //$("div.generate_chooser_info.active").removeClass("active");
+        //$("li.generate_chooser_choice.active").removeClass("active");
 
-        if (currentChoice === appstate.GENERATE_CHOICES.IMPULSE) {
-          me.$impulseChoiceElement.addClass("active");
-          me.$impulseInfoElement.addClass("active");
-        }
-        else if (currentChoice === appstate.GENERATE_CHOICES.GOLAY) {
-          me.$golayInfoElement.addClass("active");
-          me.$golayChoiceElement.addClass("active");
-        }
+        //if (currentChoice === appstate.GENERATE_CHOICES.IMPULSE) {
+          //me.$impulseChoiceElement.addClass("active");
+          //me.$impulseInfoElement.addClass("active");
+        //}
+        //else if (currentChoice === appstate.GENERATE_CHOICES.GOLAY) {
+          //me.$golayInfoElement.addClass("active");
+          //me.$golayChoiceElement.addClass("active");
+        //}
         
       });
     },
@@ -81,9 +82,9 @@ define([
     events: {
 
       // when generation choice is selected
-      "click li.generate_chooser_choice.disabled": "disabled_choice_clicked",
-      "click li.generate_chooser_choice#impulse_choice": "impulse_choice_clicked",
-      "click li.generate_chooser_choice#golay_choice": "golay_choice_clicked",
+      //"click li.generate_chooser_choice.disabled": "disabled_choice_clicked",
+      //"click li.generate_chooser_choice#impulse_choice": "impulse_choice_clicked",
+      //"click li.generate_chooser_choice#golay_choice": "golay_choice_clicked",
 
       // when golay length is selected
       "click li.golay_length_choice": "golay_length_chosen",

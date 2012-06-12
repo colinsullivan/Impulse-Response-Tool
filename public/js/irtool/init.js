@@ -13,7 +13,8 @@ require.config({
     jquery: "/js/libs/jquery-1.7.1",
     underscore: "/js/libs/underscore/underscore",
     Backbone: "/js/libs/backbone/backbone",
-    bootstrap: "/css/bootstrap/js/"
+    bootstrap: "/css/bootstrap/js/",
+    audiolib: "/js/libs/audiolibjs/src/"
   },
   baseUrl: "/js/"
 });

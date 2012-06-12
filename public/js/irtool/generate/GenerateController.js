@@ -11,9 +11,12 @@ define([
   "jquery",
   "irtool/Controller",
   "irtool/irtool",
-  "irtool/generate/views/GenerateChooser"
-], function ($, Controller, irtool, GenerateChooser) {
+  "irtool/generate/views/GenerateChooser",
+  "audiolib/processors/fft"
+], function ($, Controller, irtool, GenerateChooser, FFT) {
   "use strict";
+
+  FFT = window.FFT;
 
   return Controller.extend({
     initialize: function (params) {
@@ -39,12 +42,14 @@ define([
       return null;
       
     },
-    generate_golay: function (golayLength) {
-      var bufa, bufb, data,
+    generate_golay: function (golayPower) {
+      var golayLength, 
+        bufa, bufb, data, bufaData, bufbData,
         ctx = irtool.audioCtx,
+        complexPointwiseMultiply,
         golay_code,
         golayResult,
-        zpf;
+        zpf, i;
 
       /**
        *  Generates a golay code of length 2^n.
@@ -91,32 +96,110 @@ define([
         return [a, b];
       };
 
-      golayResult = golay_code(golayLength);
-      zpf = 1024;
+      golayResult = golay_code(golayPower);
+      golayLength = golayResult[0].length;
+      zpf = 2;
+
 
       // zero pad golay a
-      bufa = ctx.createBuffer(1, golayResult[0].length + zpf, irtool.sampleRate);
-      data = golayResult[0].getChannelData(0);
-      for (i = 0; i < bufa.length; i++) {
-        if (i < golayResult[0].length) {
-          bufa[i] = data[i];
-        }
-        else {
-          bufa[i] = 0.0;
-        }
-      }
+      //bufa = ctx.createBuffer(1, golayResult[0].length + zpf, irtool.sampleRate);
+      //bufaData = bufa.getChannelData(0);
+      //data = golayResult[0].getChannelData(0);
+      //for (i = 0; i < bufa.length; i++) {
+        //if (i < golayResult[0].length) {
+          //bufaData[i] = data[i];
+        //} else {
+          //bufaData[i] = 0.0;
+        //}
+      //}
 
       //zero pad golay b
-      bufb = ctx.createBuffer(1, golayResult[1].length + zpf, irtool.sampleRate);
-      data = golayResult[1].getChannelData(0);
-      for (i = 0; i < bufb.length; i++) {
-        if (i < golayResult[1].length) {
-          bufb[i] = data[i];
+      //bufb = ctx.createBuffer(1, golayResult[1].length + zpf, irtool.sampleRate);
+      //bufbData = bufb.getChannelData(0);
+      //data = golayResult[1].getChannelData(0);
+      //for (i = 0; i < bufb.length; i++) {
+        //if (i < golayResult[1].length) {
+          //bufbData[i] = data[i];
+        //} else {
+          //bufbData[i] = 0.0;
+        //}
+      //}
+
+      var bufaFFT, bufaFFTReverse, bufaData, bufbFFT, bufbFFTReverse, bufbData;
+
+      bufaFFT = new FFT(irtool.sampleRate, zpf * golayLength);
+      bufaFFTReverse = new FFT(irtool.sampleRate, zpf * golayLength);
+      bufbFFT = new FFT(irtool.sampleRate, zpf * golayLength);
+      bufbFFTReverse = new FFT(irtool.sampleRate, zpf * golayLength);
+
+
+      //bufa = ctx.createBuffer(1, golayResult[0].length + zpf, irtool.sampleRate);
+      //bufb = ctx.createBuffer(1, golayResult[1].length + zpf, irtool.sampleRate);
+      //bufaData = bufa.getChannelData(0);
+      //bufbData = bufb.getChannelData(0);
+
+      complexPointwiseMultiply = function (x, y) {
+        var result = [], re, im, i;
+
+        for (i = 0; i < x.length / 2; i++) {
+          re = x[2 * i] * y[2 * i] - x[2 * i + 1] * y[2 * i + 1];
+          im = x[2 * i] * y[2 * i + 1] + x[2 * i + 1] * y[2 * i];
+          result[2 * i] = re;
+          result[2 * i + 1] = im;
         }
-        else {
-          bufb[i] = 0.0;
-        }
+
+        return result;
+      };
+
+    
+      bufaData = golayResult[0].getChannelData(0);
+      bufbData = golayResult[1].getChannelData(0);
+      for (i = 0; i < golayLength; i++) {
+        bufaFFT.pushSample(bufaData[i]);
+        bufaFFTReverse.pushSample(bufaData[golayLength - 1 - i]);
+        bufbFFT.pushSample(bufbData[i]);
+        bufbFFTReverse.pushSample(bufbData[golayLength - 1 - i]);
       }
+      // TODO: next power of two from longest signal for zpf
+      for (i = 0; i < golayLength * (zpf - 1); i++) {
+        bufaFFT.pushSample(0.0);
+        bufaFFTReverse.pushSample(0.0);
+        bufbFFT.pushSample(0.0);
+        bufbFFTReverse.pushSample(0.0);
+      }
+
+
+      var resulta = complexPointwiseMultiply(bufaFFT.outputBuffer, bufaFFTReverse.outputBuffer);
+      var resultb = complexPointwiseMultiply(bufbFFT.outputBuffer, bufbFFTReverse.outputBuffer);
+
+      //result = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+      var resultaInverseFFT = new FFT(irtool.sampleRate, zpf * golayLength, true);
+      resultaInverseFFT.process(
+        resultaInverseFFT.outputBuffer,
+        resulta,
+        "complex"
+      );
+      console.log("resultaInverseFFT.outputBuffer");
+      console.log(resultaInverseFFT.outputBuffer);
+      
+      var resultbInverseFFT = new FFT(irtool.sampleRate, zpf * golayLength, true);
+      resultbInverseFFT.process(
+        resultbInverseFFT.outputBuffer,
+        resultb,
+        "complex"
+      );
+      console.log("resultbInverseFFT.outputBuffer");
+      console.log(resultbInverseFFT.outputBuffer);
+
+      var sum = [];
+      for (var i = 0; i < resultaInverseFFT.outputBuffer.length; i+=2) {
+        sum.push(
+          (resultaInverseFFT.outputBuffer[i] + resultbInverseFFT.outputBuffer[i]) / (2.0 * zpf * Math.pow(golayLength, 2))
+        );
+      }
+
+      console.log("sum");
+      console.log(sum);
 
     }
   });

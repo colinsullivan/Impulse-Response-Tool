@@ -13,3 +13,6 @@
 [submodule "public/js/libs/underscore"]
 	path = public/js/libs/underscore
 	url = git://github.com/documentcloud/underscore.git
+[submodule "public/js/libs/audiolibjs"]
+	path = public/js/libs/audiolibjs
+	url = git://github.com/jussi-kalliokoski/audiolib.js.git
